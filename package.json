@@ -1,0 +1,51 @@
+{
+  "name": "agentbrain",
+  "version": "0.1.0",
+  "description": "CLI for AgentBrain enterprise data hub - interact with organizations, connectors, knowledge bases, and workflows",
+  "type": "module",
+  "bin": {
+    "agentbrain": "./dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "lint": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "prepublishOnly": "pnpm build"
+  },
+  "keywords": [
+    "agentbrain",
+    "cli",
+    "ai",
+    "enterprise",
+    "data-hub",
+    "mcp",
+    "goclaw"
+  ],
+  "author": "Next Level Builders",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nextlevelbuilder/agentbrain-cli"
+  },
+  "packageManager": "pnpm@10.22.0",
+  "dependencies": {
+    "chalk": "^5.6.2",
+    "cli-table3": "^0.6.5",
+    "commander": "^14.0.3",
+    "yaml": "^2.8.2"
+  },
+  "devDependencies": {
+    "@types/node": "^25.3.3",
+    "tsup": "^8.5.1",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.18"
+  }
+}

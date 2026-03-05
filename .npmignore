@@ -1,0 +1,9 @@
+src/
+tests/
+plans/
+docs/
+tsconfig.json
+tsup.config.ts
+.gitignore
+.env*
+coverage/
