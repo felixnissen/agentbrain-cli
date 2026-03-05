@@ -132,6 +132,24 @@ cmd.opts() = {
 
 **Files:** `src/config/config-schema.ts`, `src/config/config-manager.ts`
 
+**Creating Initial Config:**
+The `config init` command provides an interactive setup wizard to generate the initial config file:
+```bash
+$ agentbrain config init
+
+AgentBrain CLI Setup
+
+For on-premise deployments, enter your internal API URL.
+For cloud, press Enter to use the default.
+
+API URL [https://api.agentbrain.sh]:
+API Key: sk_live_xxxxx
+Default Organization ID (optional): org_xxxxx
+
+Configuration saved to ~/.agentbrain/config.json
+```
+
+**Resolution Priority:**
 ```
 Priority (highest to lowest):
 1. CLI Flags (cmd.opts())

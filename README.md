@@ -22,7 +22,22 @@ Requires Node 20+.
 
 ## Quick Start
 
-Set your API credentials:
+### Option 1: Interactive Setup (Recommended)
+
+Run the interactive setup wizard:
+
+```bash
+agentbrain config init
+```
+
+This prompts you for:
+- API URL (default: https://api.agentbrain.sh for cloud, custom for on-premise)
+- API Key
+- Default Organization ID (optional)
+
+### Option 2: Manual Configuration
+
+Set your API credentials via commands:
 
 ```bash
 agentbrain config set apiKey sk_live_xxxxx
@@ -30,7 +45,7 @@ agentbrain config set apiUrl https://api.agentbrain.sh
 agentbrain config set orgId org_xxxxx
 ```
 
-Verify setup:
+### Verify Setup
 
 ```bash
 agentbrain org me

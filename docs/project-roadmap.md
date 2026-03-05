@@ -112,13 +112,19 @@ agentbrain --completion fish | sudo tee /usr/share/fish/vendor_completions.d/age
 ```
 
 #### FR-2.3: Configuration Templates
+- [x] Interactive setup wizard (`config init`) — Completed in v0.1.0
 - Pre-configured profiles (dev, staging, production)
 - Quick-start templates for common setups
 - Template inheritance and overrides
 
-**Usage:**
+**Completed in v0.1.0:**
 ```bash
-agentbrain config init production  # Creates ~/.agentbrain/config.json
+agentbrain config init  # Interactive setup wizard
+```
+
+**Planned for v0.2.0:**
+```bash
+agentbrain config init production  # Creates ~/.agentbrain/config.json with profile
 agentbrain config profile dev      # Switch profiles
 ```
 

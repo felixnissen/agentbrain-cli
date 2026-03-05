@@ -116,7 +116,7 @@ Strategic vision and planning:
 ## Quick Navigation by Topic
 
 ### For New Developers
-1. Start with **README.md** — Installation and quick start
+1. Start with **README.md** — Installation and quick start (use `agentbrain config init` first)
 2. Read **codebase-summary.md** — Understand file structure
 3. Check **code-standards.md** — Learn conventions before writing code
 4. Review **system-architecture.md** — Understand how it all fits together

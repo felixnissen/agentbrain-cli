@@ -446,6 +446,11 @@ export const ENV_VAR_MAP: Record<string, string> = {
 
 ### Config Persistence
 
+**Reading and Writing:**
+- `getConfigValue(key)` — Reads from config file (or defaults)
+- `setConfigValue(key, value)` — Writes single key to config file
+- `config init` — Interactive wizard prompts for initial setup (uses readline/promises)
+
 **Security:** Restrict file permissions
 ```typescript
 writeFileSync(CONFIG_FILE, JSON.stringify(config, null, 2) + "\n", "utf-8");

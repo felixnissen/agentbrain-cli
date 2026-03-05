@@ -124,12 +124,14 @@ AgentBrain CLI bridges the gap between AgentBrain's web UI and programmatic acce
 - Results filterable by date, status, user
 
 #### FR-8: Configuration Management
+- Interactive setup wizard for initial configuration
 - Persistent config at ~/.agentbrain/config.json
 - Environment variable overrides
 - CLI flag overrides
 - View and update individual config keys
 
 **Acceptance Criteria:**
+- `agentbrain config init` wizard works interactively for API URL, API Key, and Org ID
 - `agentbrain config get/set/list` commands work
 - Config file has mode 0600 (user-readable only)
 - Resolution order: defaults < file < env < CLI flags

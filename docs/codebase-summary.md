@@ -5,7 +5,7 @@
 | Metric | Value |
 |--------|-------|
 | Total TypeScript Files | 20 |
-| Total Source Lines of Code | 1,711 |
+| Total Source Lines of Code | 1,737 |
 | Bundle Size | 39.5 KB (ESM) |
 | Node.js Version | 20+ |
 | Package Manager | pnpm 10.22.0 |
@@ -24,8 +24,8 @@ agentbrain-cli/
 │   ├── client/
 │   │   ├── api-error.ts              (34 LOC) Error class + messages
 │   │   └── http-client.ts            (158 LOC) HTTP client, auth, SSE
-│   ├── commands/                     (10 files, ~900 LOC total)
-│   │   ├── config-command.ts         (47 LOC) config get/set/list
+│   ├── commands/                     (10 files, ~925 LOC total)
+│   │   ├── config-command.ts         (75 LOC) config get/set/list/init
 │   │   ├── org-command.ts            (110 LOC) organization CRUD + members
 │   │   ├── connector-command.ts      (181 LOC) connector ops + introspection
 │   │   ├── connector-subtype-command.ts (57 LOC) subtype management
@@ -402,7 +402,7 @@ tests/
 1. **Pagination** — CLI doesn't expose limit/page params (all results returned)
 2. **Batch Operations** — Each command = one API request (no bulk mutations)
 3. **Transactions** — No multi-command transactions or rollback
-4. **Interactive Mode** — Commands are non-interactive (no prompts)
+4. **Interactive Mode** — Commands are non-interactive except `config init` wizard
 5. **Caching** — No client-side caching of resources
 6. **Plugins** — No plugin system for custom commands
 
