@@ -25,41 +25,137 @@ jobs:
       - name: Build rights-aware material bank batch
         run: python tools/material_bank_batch.py --out material-bank-batch-001
 
-      - name: Show batch sizes
-        run: du -sh material-bank-batch-001/* && find material-bank-batch-001 -type f | wc -l
+      - name: Build Drive-safe dataset volumes
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf dataset-transport
+          mkdir -p dataset-transport/parts
 
-      - name: Upload books artifact
+          # Preserve the original CMU ZIP byte-for-byte, split only for transport.
+          split -b 90M -d -a 3 \
+            material-bank-batch-001/datasets/CMU_Mocap/allasfamc.zip \
+            dataset-transport/parts/cmu-mocap-allasfamc.zip.part-
+
+          # Tar the Khronos tree without recompressing, then split the TAR.
+          tar -cf dataset-transport/khronos-gltf-sample-assets.tar \
+            -C material-bank-batch-001/datasets Khronos_glTF_Sample_Assets
+          split -b 90M -d -a 3 \
+            dataset-transport/khronos-gltf-sample-assets.tar \
+            dataset-transport/parts/khronos-gltf-sample-assets.tar.part-
+          rm dataset-transport/khronos-gltf-sample-assets.tar
+
+          cp material-bank-batch-001/datasets/INVENTORY.json dataset-transport/DATASET_INVENTORY.json
+          cp material-bank-batch-001/datasets/SOURCES.md dataset-transport/DATASET_SOURCES.md
+
+          cat > dataset-transport/REASSEMBLY.md <<'EOF'
+          # Dataset transport volumes
+
+          These files are transport-only 90 MiB volumes created because the Drive bridge has a 100 MiB per-file limit.
+
+          ## CMU Motion Capture
+          Reassemble the original official ZIP by concatenating all `cmu-mocap-allasfamc.zip.part-*` files in lexical order into `allasfamc.zip`.
+
+          ## Khronos glTF Sample Assets
+          Concatenate all `khronos-gltf-sample-assets.tar.part-*` files in lexical order into `khronos-gltf-sample-assets.tar`, then extract the TAR.
+
+          `SHA256SUMS` contains a digest for every transport volume. `ORIGINAL_SHA256SUMS` contains hashes for the reconstructed source archives.
+          EOF
+
+          sha256sum dataset-transport/parts/* > dataset-transport/SHA256SUMS
+          sha256sum material-bank-batch-001/datasets/CMU_Mocap/allasfamc.zip > dataset-transport/ORIGINAL_SHA256SUMS
+          tar -cf /tmp/khronos-original.tar -C material-bank-batch-001/datasets Khronos_glTF_Sample_Assets
+          sha256sum /tmp/khronos-original.tar >> dataset-transport/ORIGINAL_SHA256SUMS
+          rm /tmp/khronos-original.tar
+
+          python - <<'PY'
+          from pathlib import Path
+          import shutil
+
+          root = Path('dataset-transport')
+          parts = sorted((root / 'parts').iterdir())
+          max_group = 5  # 5 × 90 MiB = 450 MiB, below the 512 MiB connector cap.
+          for i in range(8):
+              g = root / f'group-{i:02d}'
+              g.mkdir(parents=True, exist_ok=True)
+              for meta in ['REASSEMBLY.md', 'SHA256SUMS', 'ORIGINAL_SHA256SUMS', 'DATASET_INVENTORY.json', 'DATASET_SOURCES.md']:
+                  shutil.copy2(root / meta, g / meta)
+          for idx, part in enumerate(parts):
+              g = root / f'group-{idx // max_group:02d}'
+              shutil.copy2(part, g / part.name)
+          print(f'{len(parts)} volume files across {(len(parts) + max_group - 1) // max_group} artifact groups')
+          PY
+
+          du -sh dataset-transport/group-* || true
+
+      - name: Upload dataset group 00
         uses: actions/upload-artifact@v4
         with:
-          name: material-bank-books-001
-          path: material-bank-batch-001/books
-          compression-level: 6
+          name: material-bank-dataset-group-00
+          path: dataset-transport/group-00
+          compression-level: 0
           retention-days: 2
           if-no-files-found: error
 
-      - name: Upload assets artifact
+      - name: Upload dataset group 01
         uses: actions/upload-artifact@v4
         with:
-          name: material-bank-assets-001
-          path: material-bank-batch-001/assets
-          compression-level: 6
+          name: material-bank-dataset-group-01
+          path: dataset-transport/group-01
+          compression-level: 0
           retention-days: 2
           if-no-files-found: error
 
-      - name: Upload datasets artifact
+      - name: Upload dataset group 02
         uses: actions/upload-artifact@v4
         with:
-          name: material-bank-datasets-001
-          path: material-bank-batch-001/datasets
-          compression-level: 6
+          name: material-bank-dataset-group-02
+          path: dataset-transport/group-02
+          compression-level: 0
           retention-days: 2
           if-no-files-found: error
 
-      - name: Upload repos artifact
+      - name: Upload dataset group 03
         uses: actions/upload-artifact@v4
         with:
-          name: material-bank-repos-001
-          path: material-bank-batch-001/repos
-          compression-level: 6
+          name: material-bank-dataset-group-03
+          path: dataset-transport/group-03
+          compression-level: 0
           retention-days: 2
           if-no-files-found: error
+
+      - name: Upload dataset group 04
+        uses: actions/upload-artifact@v4
+        with:
+          name: material-bank-dataset-group-04
+          path: dataset-transport/group-04
+          compression-level: 0
+          retention-days: 2
+          if-no-files-found: error
+
+      - name: Upload dataset group 05
+        uses: actions/upload-artifact@v4
+        with:
+          name: material-bank-dataset-group-05
+          path: dataset-transport/group-05
+          compression-level: 0
+          retention-days: 2
+          if-no-files-found: ignore
+
+      - name: Upload dataset group 06
+        uses: actions/upload-artifact@v4
+        with:
+          name: material-bank-dataset-group-06
+          path: dataset-transport/group-06
+          compression-level: 0
+          retention-days: 2
+          if-no-files-found: ignore
+
+      - name: Upload dataset group 07
+        uses: actions/upload-artifact@v4
+        with:
+          name: material-bank-dataset-group-07
+          path: dataset-transport/group-07
+          compression-level: 0
+          retention-days: 2
+          if-no-files-found: ignore
