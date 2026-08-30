@@ -1,0 +1,65 @@
+name: Material Bank Transport
+
+on:
+  pull_request:
+    paths:
+      - 'tools/material_bank_batch.py'
+      - 'material-bank-transport/**'
+
+permissions:
+  contents: read
+
+jobs:
+  build-material-bank:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Checkout transport branch
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Build rights-aware material bank batch
+        run: python tools/material_bank_batch.py --out material-bank-batch-001
+
+      - name: Show batch sizes
+        run: du -sh material-bank-batch-001/* && find material-bank-batch-001 -type f | wc -l
+
+      - name: Upload books artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: material-bank-books-001
+          path: material-bank-batch-001/books
+          compression-level: 6
+          retention-days: 2
+          if-no-files-found: error
+
+      - name: Upload assets artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: material-bank-assets-001
+          path: material-bank-batch-001/assets
+          compression-level: 6
+          retention-days: 2
+          if-no-files-found: error
+
+      - name: Upload datasets artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: material-bank-datasets-001
+          path: material-bank-batch-001/datasets
+          compression-level: 6
+          retention-days: 2
+          if-no-files-found: error
+
+      - name: Upload repos artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: material-bank-repos-001
+          path: material-bank-batch-001/repos
+          compression-level: 6
+          retention-days: 2
+          if-no-files-found: error
