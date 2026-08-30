@@ -1,0 +1,84 @@
+name: Material Bank Transport 004
+
+on:
+  pull_request:
+    paths:
+      - 'tools/material_bank_batch_004.py'
+      - 'material-bank-transport-004/**'
+
+permissions:
+  contents: read
+
+jobs:
+  build-material-bank-004:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Build batch 004
+        run: python tools/material_bank_batch_004.py --out material-bank-batch-004
+      - name: Show sizes and parts
+        run: |
+          du -sh material-bank-batch-004/payload/* || true
+          find material-bank-batch-004/transport -maxdepth 1 -type f -printf '%f %s\n' | sort
+          find material-bank-batch-004/payload -type f | wc -l
+
+      - name: Upload H3 000
+        uses: actions/upload-artifact@v4
+        with: {name: mb004-h3-000, path: material-bank-batch-004/transport/h3_ecosystem.part-000, compression-level: 0, retention-days: 2, if-no-files-found: ignore}
+      - name: Upload H3 001
+        uses: actions/upload-artifact@v4
+        with: {name: mb004-h3-001, path: material-bank-batch-004/transport/h3_ecosystem.part-001, compression-level: 0, retention-days: 2, if-no-files-found: ignore}
+
+      - name: Upload realtime 000
+        uses: actions/upload-artifact@v4
+        with: {name: mb004-realtime-000, path: material-bank-batch-004/transport/realtime_world_models.part-000, compression-level: 0, retention-days: 2, if-no-files-found: ignore}
+      - name: Upload realtime 001
+        uses: actions/upload-artifact@v4
+        with: {name: mb004-realtime-001, path: material-bank-batch-004/transport/realtime_world_models.part-001, compression-level: 0, retention-days: 2, if-no-files-found: ignore}
+
+      - name: Upload acceleration 000
+        uses: actions/upload-artifact@v4
+        with: {name: mb004-acceleration-000, path: material-bank-batch-004/transport/video_acceleration.part-000, compression-level: 0, retention-days: 2, if-no-files-found: ignore}
+      - name: Upload acceleration 001
+        uses: actions/upload-artifact@v4
+        with: {name: mb004-acceleration-001, path: material-bank-batch-004/transport/video_acceleration.part-001, compression-level: 0, retention-days: 2, if-no-files-found: ignore}
+      - name: Upload acceleration 002
+        uses: actions/upload-artifact@v4
+        with: {name: mb004-acceleration-002, path: material-bank-batch-004/transport/video_acceleration.part-002, compression-level: 0, retention-days: 2, if-no-files-found: ignore}
+      - name: Upload acceleration 003
+        uses: actions/upload-artifact@v4
+        with: {name: mb004-acceleration-003, path: material-bank-batch-004/transport/video_acceleration.part-003, compression-level: 0, retention-days: 2, if-no-files-found: ignore}
+      - name: Upload acceleration 004
+        uses: actions/upload-artifact@v4
+        with: {name: mb004-acceleration-004, path: material-bank-batch-004/transport/video_acceleration.part-004, compression-level: 0, retention-days: 2, if-no-files-found: ignore}
+      - name: Upload acceleration 005
+        uses: actions/upload-artifact@v4
+        with: {name: mb004-acceleration-005, path: material-bank-batch-004/transport/video_acceleration.part-005, compression-level: 0, retention-days: 2, if-no-files-found: ignore}
+      - name: Upload acceleration 006
+        uses: actions/upload-artifact@v4
+        with: {name: mb004-acceleration-006, path: material-bank-batch-004/transport/video_acceleration.part-006, compression-level: 0, retention-days: 2, if-no-files-found: ignore}
+      - name: Upload acceleration 007
+        uses: actions/upload-artifact@v4
+        with: {name: mb004-acceleration-007, path: material-bank-batch-004/transport/video_acceleration.part-007, compression-level: 0, retention-days: 2, if-no-files-found: ignore}
+
+      - name: Upload academic noncommercial 000
+        uses: actions/upload-artifact@v4
+        with: {name: mb004-academic-nc-000, path: material-bank-batch-004/transport/academic_noncommercial.part-000, compression-level: 0, retention-days: 2, if-no-files-found: ignore}
+      - name: Upload catalog 000
+        uses: actions/upload-artifact@v4
+        with: {name: mb004-catalog-000, path: material-bank-batch-004/transport/catalog_only.part-000, compression-level: 0, retention-days: 2, if-no-files-found: ignore}
+      - name: Upload manifests
+        uses: actions/upload-artifact@v4
+        with:
+          name: mb004-manifests
+          path: |
+            material-bank-batch-004/transport/ORIGINAL_SHA256SUMS
+            material-bank-batch-004/transport/SHA256SUMS
+            material-bank-batch-004/transport/REASSEMBLY.md
+          compression-level: 0
+          retention-days: 2
+          if-no-files-found: error
