@@ -25,35 +25,75 @@ jobs:
       - name: Show sizes
         run: |
           du -sh material-bank-batch-003/payload/* || true
-          du -sh material-bank-batch-003/transport/group-* || true
+          find material-bank-batch-003/transport -maxdepth 1 -type f -printf '%f %s\n' | sort
           find material-bank-batch-003/payload -type f | wc -l
-      - name: Upload group 00
+
+      # One Drive-safe part per Actions artifact. GitHub's artifact ZIP is then <100 MB.
+      - name: Upload learning noncommercial 000
         uses: actions/upload-artifact@v4
-        with: {name: material-bank-003-group-00, path: material-bank-batch-003/transport/group-00, compression-level: 0, retention-days: 2, if-no-files-found: ignore}
-      - name: Upload group 01
+        with: {name: mb003-learning-nc-000, path: material-bank-batch-003/transport/learning_noncommercial.part-000, compression-level: 0, retention-days: 2, if-no-files-found: error}
+      - name: Upload learning open 000
         uses: actions/upload-artifact@v4
-        with: {name: material-bank-003-group-01, path: material-bank-batch-003/transport/group-01, compression-level: 0, retention-days: 2, if-no-files-found: ignore}
-      - name: Upload group 02
+        with: {name: mb003-learning-open-000, path: material-bank-batch-003/transport/learning_open.part-000, compression-level: 0, retention-days: 2, if-no-files-found: error}
+      - name: Upload learning open 001
         uses: actions/upload-artifact@v4
-        with: {name: material-bank-003-group-02, path: material-bank-batch-003/transport/group-02, compression-level: 0, retention-days: 2, if-no-files-found: ignore}
-      - name: Upload group 03
+        with: {name: mb003-learning-open-001, path: material-bank-batch-003/transport/learning_open.part-001, compression-level: 0, retention-days: 2, if-no-files-found: error}
+
+      - name: Upload rendering 000
         uses: actions/upload-artifact@v4
-        with: {name: material-bank-003-group-03, path: material-bank-batch-003/transport/group-03, compression-level: 0, retention-days: 2, if-no-files-found: ignore}
-      - name: Upload group 04
+        with: {name: mb003-rendering-000, path: material-bank-batch-003/transport/rendering_vfx.part-000, compression-level: 0, retention-days: 2, if-no-files-found: error}
+      - name: Upload rendering 001
         uses: actions/upload-artifact@v4
-        with: {name: material-bank-003-group-04, path: material-bank-batch-003/transport/group-04, compression-level: 0, retention-days: 2, if-no-files-found: ignore}
-      - name: Upload group 05
+        with: {name: mb003-rendering-001, path: material-bank-batch-003/transport/rendering_vfx.part-001, compression-level: 0, retention-days: 2, if-no-files-found: error}
+      - name: Upload rendering 002
         uses: actions/upload-artifact@v4
-        with: {name: material-bank-003-group-05, path: material-bank-batch-003/transport/group-05, compression-level: 0, retention-days: 2, if-no-files-found: ignore}
-      - name: Upload group 06
+        with: {name: mb003-rendering-002, path: material-bank-batch-003/transport/rendering_vfx.part-002, compression-level: 0, retention-days: 2, if-no-files-found: error}
+      - name: Upload rendering 003
         uses: actions/upload-artifact@v4
-        with: {name: material-bank-003-group-06, path: material-bank-batch-003/transport/group-06, compression-level: 0, retention-days: 2, if-no-files-found: ignore}
-      - name: Upload group 07
+        with: {name: mb003-rendering-003, path: material-bank-batch-003/transport/rendering_vfx.part-003, compression-level: 0, retention-days: 2, if-no-files-found: error}
+      - name: Upload rendering 004
         uses: actions/upload-artifact@v4
-        with: {name: material-bank-003-group-07, path: material-bank-batch-003/transport/group-07, compression-level: 0, retention-days: 2, if-no-files-found: ignore}
-      - name: Upload group 08
+        with: {name: mb003-rendering-004, path: material-bank-batch-003/transport/rendering_vfx.part-004, compression-level: 0, retention-days: 2, if-no-files-found: error}
+      - name: Upload rendering 005
         uses: actions/upload-artifact@v4
-        with: {name: material-bank-003-group-08, path: material-bank-batch-003/transport/group-08, compression-level: 0, retention-days: 2, if-no-files-found: ignore}
-      - name: Upload group 09
+        with: {name: mb003-rendering-005, path: material-bank-batch-003/transport/rendering_vfx.part-005, compression-level: 0, retention-days: 2, if-no-files-found: error}
+      - name: Upload rendering 006
         uses: actions/upload-artifact@v4
-        with: {name: material-bank-003-group-09, path: material-bank-batch-003/transport/group-09, compression-level: 0, retention-days: 2, if-no-files-found: ignore}
+        with: {name: mb003-rendering-006, path: material-bank-batch-003/transport/rendering_vfx.part-006, compression-level: 0, retention-days: 2, if-no-files-found: error}
+      - name: Upload rendering 007
+        uses: actions/upload-artifact@v4
+        with: {name: mb003-rendering-007, path: material-bank-batch-003/transport/rendering_vfx.part-007, compression-level: 0, retention-days: 2, if-no-files-found: error}
+      - name: Upload rendering 008
+        uses: actions/upload-artifact@v4
+        with: {name: mb003-rendering-008, path: material-bank-batch-003/transport/rendering_vfx.part-008, compression-level: 0, retention-days: 2, if-no-files-found: error}
+
+      - name: Upload procedural 000
+        uses: actions/upload-artifact@v4
+        with: {name: mb003-procedural-000, path: material-bank-batch-003/transport/procedural_ai_motion.part-000, compression-level: 0, retention-days: 2, if-no-files-found: error}
+      - name: Upload procedural 001
+        uses: actions/upload-artifact@v4
+        with: {name: mb003-procedural-001, path: material-bank-batch-003/transport/procedural_ai_motion.part-001, compression-level: 0, retention-days: 2, if-no-files-found: error}
+      - name: Upload procedural 002
+        uses: actions/upload-artifact@v4
+        with: {name: mb003-procedural-002, path: material-bank-batch-003/transport/procedural_ai_motion.part-002, compression-level: 0, retention-days: 2, if-no-files-found: error}
+      - name: Upload procedural 003
+        uses: actions/upload-artifact@v4
+        with: {name: mb003-procedural-003, path: material-bank-batch-003/transport/procedural_ai_motion.part-003, compression-level: 0, retention-days: 2, if-no-files-found: error}
+      - name: Upload procedural 004
+        uses: actions/upload-artifact@v4
+        with: {name: mb003-procedural-004, path: material-bank-batch-003/transport/procedural_ai_motion.part-004, compression-level: 0, retention-days: 2, if-no-files-found: error}
+
+      - name: Upload catalog 000
+        uses: actions/upload-artifact@v4
+        with: {name: mb003-catalog-000, path: material-bank-batch-003/transport/catalog_only.part-000, compression-level: 0, retention-days: 2, if-no-files-found: error}
+      - name: Upload manifests
+        uses: actions/upload-artifact@v4
+        with:
+          name: mb003-manifests
+          path: |
+            material-bank-batch-003/transport/ORIGINAL_SHA256SUMS
+            material-bank-batch-003/transport/SHA256SUMS
+            material-bank-batch-003/transport/REASSEMBLY.md
+          compression-level: 0
+          retention-days: 2
+          if-no-files-found: error
