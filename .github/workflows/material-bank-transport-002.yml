@@ -1,0 +1,104 @@
+name: Material Bank Transport 002
+
+on:
+  pull_request:
+    paths:
+      - 'tools/material_bank_batch_002.py'
+      - 'material-bank-transport-002/**'
+
+permissions:
+  contents: read
+
+jobs:
+  build-material-bank-002:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Checkout transport branch
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Build rights-aware material bank batch 002
+        run: python tools/material_bank_batch_002.py --out material-bank-batch-002
+
+      - name: Show payload and transport sizes
+        run: |
+          du -sh material-bank-batch-002/payload/* || true
+          du -sh material-bank-batch-002/transport/group-* || true
+          find material-bank-batch-002/payload -type f | wc -l
+
+      - name: Upload group 00
+        uses: actions/upload-artifact@v4
+        with:
+          name: material-bank-002-group-00
+          path: material-bank-batch-002/transport/group-00
+          compression-level: 0
+          retention-days: 2
+          if-no-files-found: ignore
+
+      - name: Upload group 01
+        uses: actions/upload-artifact@v4
+        with:
+          name: material-bank-002-group-01
+          path: material-bank-batch-002/transport/group-01
+          compression-level: 0
+          retention-days: 2
+          if-no-files-found: ignore
+
+      - name: Upload group 02
+        uses: actions/upload-artifact@v4
+        with:
+          name: material-bank-002-group-02
+          path: material-bank-batch-002/transport/group-02
+          compression-level: 0
+          retention-days: 2
+          if-no-files-found: ignore
+
+      - name: Upload group 03
+        uses: actions/upload-artifact@v4
+        with:
+          name: material-bank-002-group-03
+          path: material-bank-batch-002/transport/group-03
+          compression-level: 0
+          retention-days: 2
+          if-no-files-found: ignore
+
+      - name: Upload group 04
+        uses: actions/upload-artifact@v4
+        with:
+          name: material-bank-002-group-04
+          path: material-bank-batch-002/transport/group-04
+          compression-level: 0
+          retention-days: 2
+          if-no-files-found: ignore
+
+      - name: Upload group 05
+        uses: actions/upload-artifact@v4
+        with:
+          name: material-bank-002-group-05
+          path: material-bank-batch-002/transport/group-05
+          compression-level: 0
+          retention-days: 2
+          if-no-files-found: ignore
+
+      - name: Upload group 06
+        uses: actions/upload-artifact@v4
+        with:
+          name: material-bank-002-group-06
+          path: material-bank-batch-002/transport/group-06
+          compression-level: 0
+          retention-days: 2
+          if-no-files-found: ignore
+
+      - name: Upload group 07
+        uses: actions/upload-artifact@v4
+        with:
+          name: material-bank-002-group-07
+          path: material-bank-batch-002/transport/group-07
+          compression-level: 0
+          retention-days: 2
+          if-no-files-found: ignore
