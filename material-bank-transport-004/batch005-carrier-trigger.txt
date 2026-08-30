@@ -1,0 +1,1 @@
+Batch 005 carrier trigger. Source of truth remains AI-Asset-Department. This file exists only to trigger the already-approved Material Bank Transport 004 workflow on this temporary PR branch.
